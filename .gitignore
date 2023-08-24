@@ -2,6 +2,10 @@
 .env
 
 ai-news-env/
+models/
+
+#unwanted files
+search_trials.py
 
 
 #my notes
