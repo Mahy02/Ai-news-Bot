@@ -6,6 +6,7 @@ models/
 
 #unwanted files
 search_trials.py
+convert-llama-ggmlv3-to-gguf.py
 
 
 #my notes
