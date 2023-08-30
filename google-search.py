@@ -151,6 +151,7 @@ def braveSearch(inputText):
 
 
 ##############################################################################################################
+
 # tetsing the search:
 
 print("Duck Duck Go: \n")
@@ -164,19 +165,28 @@ print("\n")
 
 # sec best ------------------
 
-print("Google search: \n")
-google_search_tool("what is new about AI today?")
-print("\n")
+# print("Google search: \n")
+# google_search_tool("what is new about AI today?")
+# print("\n")
 
 
 #------------------ Best 2:
 
-print("Google Serper: \n")
-google_serper_api("AI", k=2, type="news", hl="en")
-print("\n")
+# print("Google Serper: \n")
+# google_serper_api("AI", k=2, type="news", hl="en")
+# print("\n")
 
-print("Serper with google engine: \n")
-searchSerp("What is new about AI today?")
+# print("Serper with google engine: \n")
+# searchSerp("What is new about AI today?")
+
+
+
+
+
+
+#Problems need to be resolved:
+# 1. Date  "extracting today's date or the date the user asks it about"
+# 2. secure websites???
 
 
 
