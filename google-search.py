@@ -74,7 +74,7 @@ def searchSerp(query):
     payload=json.dumps({
         'q': query,
         'type': "news",
-        'num': 3,
+        'num': 10,
         'hl': 'en',
         #"key": google_api_key,
         #"cx":search_engine_id,
@@ -154,30 +154,30 @@ def braveSearch(inputText):
 
 # tetsing the search:
 
-print("Duck Duck Go: \n")
-search_with_duckduckgo_search("What is new about AI?")
-print("\n")
+# print("Duck Duck Go: \n")
+# search_with_duckduckgo_search("What is new about AI?")
+# print("\n")
 
-print("Duck Duck Go  with results: \n")
-search_with_duckduckgo_search_results("What is new about AI?")
-print("\n")
+# print("Duck Duck Go  with results: \n")
+# search_with_duckduckgo_search_results("What is new about AI?")
+# print("\n")
 
 
-# sec best ------------------
+# # sec best ------------------
 
 # print("Google search: \n")
 # google_search_tool("what is new about AI today?")
 # print("\n")
 
 
-#------------------ Best 2:
+# #------------------ Best 2:
 
 # print("Google Serper: \n")
 # google_serper_api("AI", k=2, type="news", hl="en")
 # print("\n")
 
-# print("Serper with google engine: \n")
-# searchSerp("What is new about AI today?")
+print("Serper with google engine: \n")
+searchSerp("What is new about AI today?")
 
 
 

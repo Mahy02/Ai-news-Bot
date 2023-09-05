@@ -46,7 +46,7 @@ def get_youtube_URLS(search_links):
 
 
 query="What is new about AI?"
-num_of_videos=20
+num_of_videos=10
 
 unstructured_links= get_relevant_youtube_videos(query, num_of_videos)
 
