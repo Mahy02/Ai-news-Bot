@@ -1,2 +1,4 @@
 tiktoken
 langchain
+youtube-transcript-api
+openai
