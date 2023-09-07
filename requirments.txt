@@ -2,3 +2,4 @@ tiktoken
 langchain
 youtube-transcript-api
 openai
+bs4
