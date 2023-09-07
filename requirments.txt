@@ -3,3 +3,4 @@ langchain
 youtube-transcript-api
 openai
 bs4
+pytube
