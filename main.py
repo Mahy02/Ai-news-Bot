@@ -4,3 +4,5 @@
 # then we turn into a tweet -  #we also want to get the source info & other stuff 
 # schedule tweets
 
+from agent.ai_agent import AIAgent
+
