@@ -88,6 +88,7 @@ def searchSerp(query):
     #news if type is news, and organic if type is search
     for i,item in enumerate(response_data['news']):
         print(response_data['news'][i])
+    print(response_data['news'][0]['link'])
     return response_data
 
 

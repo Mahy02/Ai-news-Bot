@@ -2,13 +2,14 @@ import requests
 import json
 
 class SerpSearchTool:
-    def __init__(self, api_key):
+    def __init__(self, api_key, query):
         self.api_key = api_key
+        self.query = query
 
-    def run(self, query):
+    def run(self):
         url = "https://google.serper.dev/search"
         payload = json.dumps({
-            'q': query,
+            'q': self.query,
             'type': "news",
             'num': 10,
             'hl': 'en',

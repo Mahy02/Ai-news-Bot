@@ -1,1 +1,1 @@
-from .ai-agent import AIAgent
+from .ai_agent import AIAgent
