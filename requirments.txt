@@ -8,3 +8,12 @@ faiss-cpu
 htmldate
 git+https://github.com/Zeecka/pytube@fix_1060
 kor
+fastapi
+pydantic
+tweepy
+uvicorn
+Requests
+requests_oauthlib
+python-dotenv
+beautifulsoup4
+

@@ -1,9 +1,5 @@
 # LangChain basics
-from langchain.agents import load_tools, Agent
-from langchain.agents import initialize_agent
-from langchain.agents import AgentType
 from langchain.chat_models import ChatOpenAI
-from langchain.llms import OpenAI
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains.summarize import load_summarize_chain
 
@@ -14,7 +10,7 @@ from langchain.document_loaders import WebBaseLoader
 # Vector Store and retrievals
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
-from langchain.chains import RetrievalQA , RetrievalQAWithSourcesChain
+from langchain.chains import RetrievalQA 
 
 # Chat Prompt templates for dynamic values
 from langchain.prompts.chat import (
@@ -31,95 +27,125 @@ from pytube import YouTube
 
 # From Kor library
 from kor.extraction import create_extraction_chain
-from kor.nodes import Object, Text, Number
+from kor.nodes import Object, Text
 
 
 # Supporting libraries
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 import requests
+from typing import List
 
 # local
 from search_tools import YouTubeVideoFinder, SerpSearchTool
 
-class AIAgent(Agent):
+class AIAgent():
     def __init__(self):
         super().__init__()
-        self.youtube_tool = YouTubeVideoFinder("What is new about AI today?", 10)
-        self.serp_tool = SerpSearchTool("What is new about AI today?")
-        self.youtube_urls=[]
-        self.website_urls=[]
-        self.llm3 = ChatOpenAI(temperature=0,
+        load_dotenv(find_dotenv())
+        self._youtube_tool = YouTubeVideoFinder(query="What is new about AI today?", num_of_videos=5)
+        self._serp_tool = SerpSearchTool(query="What is new about AI today?" ,api_key=os.environ.get('SERPAPI_API_KEY'))
+        
+        # self._youtube_urls=[]
+        # self._website_urls=[]
+        
+        # self._youtube_urls=['https://www.youtube.com/watch?v=LK5j3pp0Too&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk', 'https://www.youtube.com/watch?v=MT8qGJZs4Gw&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=gMsQO5u7-NQ&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=LWiM-LuRe6w&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=NqnBT4-jp54&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=dv9q7Ema40k&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=2V0Irah05wk&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=vufqgaD_7Ow&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=0a5e0iCW6bE&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=XTzOxMq-Qk0&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_']
+        # self._website_urls=['https://www.dhs.gov/news/2023/09/14/dhs-announces-new-policies-and-measures-promoting-responsible-use-artificial', 'https://www.commerce.senate.gov/2023/9/sen-cruz-ai-has-opportunity-to-improve-lives-spur-economic-growth-and-create-new-jobs', 'https://www.cnn.com/2023/09/13/tech/schumer-tech-companies-ai-regulations/index.html', 'https://www.nytimes.com/2023/09/13/technology/silicon-valley-ai-washington-schumer.html', 'https://www.ey.com/en_gl/news/2023/09/ey-announces-launch-of-artificial-intelligence-platform-ey-ai-following-us-1-4b-investment', 'https://www.nytimes.com/2023/09/14/us/new-york-guidebooks-artificial-intelligence.html', 'https://www.utsa.edu/today/2023/09/story/UTSA-UT-Health-first-dual-degree-in-medicine-and-AI.html', 'https://www.psychologytoday.com/us/blog/building-brain-capital/202309/navigating-the-age-of-ai-the-role-of-a-new-brain-industry', 'https://www.gartner.com/en/articles/what-s-new-in-artificial-intelligence-from-the-2023-gartner-hype-cycle', 'https://www.forbes.com/sites/forbesbusinesscouncil/2023/09/14/how-will-ai-surround-you-and-your-business-now-and-in-the-future/']
+        
+        self._youtube_urls=['https://www.youtube.com/watch?v=LK5j3pp0Too&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk', 'https://www.youtube.com/watch?v=MT8qGJZs4Gw&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=gMsQO5u7-NQ&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_']
+        self._website_urls=["https://www.theguardian.com/technology/artificialintelligenceai", "https://news.mit.edu/topic/artificial-intelligence2"]
+        
+        #self._website_urls=["https://www.artificialintelligence-news.com/", "https://www.sciencedaily.com/news/computers_math/artificial_intelligence/", "https://www.theguardian.com/technology/artificialintelligenceai"]
+        
+        self._llm3 = ChatOpenAI(temperature=0,
                   model_name="gpt-3.5-turbo-0613",
                   request_timeout = 180
                 )
-        self.websitedocs= None
-        self.youtubedocs= None
-        self.website_topics_found= None
-        self.youtube_topics_found= None
-        self.website_topics_structured= None
-        self.youtube_topics_structured= None
-        self.website_data= None
-        self.youtube_data= None
-        self.website_db: FAISS
-        self.youtube_db: FAISS
-        self.tweets= dict
+        
+        self._websitedocs= None
+        self._youtubedocs= None
+        
+        self._website_topics_found= None
+        self._youtube_topics_found= None
+        
+        self._website_topics_structured= None
+        self._youtube_topics_structured= None
+        
+        self._website_data= None
+        self._youtube_transcript= None
+        
+        self._website_db: FAISS
+        self._youtube_db: FAISS
+        self._tweets=[]
 
+    # Getter for tweets
+    def get_tweets(self):
+        return self._tweets
 
-    def search_ai_urls(self, input_dict):
+    # Setter for tweets
+    def set_tweets(self, tweets):
+        self._tweets = tweets
+
+ 
+    def search_ai_news_urls(self):
         # Use the YouTube search tool to search for videos
-        video_urls = self.youtube_tool.find_videos()
-        self.youtube_urls= self.youtube_tool.get_youtube_urls()
+        video_urls = self._youtube_tool.find_videos()
+        self._youtube_urls= self._youtube_tool.get_youtube_urls()
+        print(self._youtube_urls)
 
         # Use the Serp search tool to search for relevant pages
-        websites_url_data = self.serp_tool.run(input_dict['query'])  #json
+        websites_url_data = self._serp_tool.run()  #json
 
-        for i,website in enumerate(websites_url_data):
-            self.website_urls.append(website[i]['link'])
-        #print(response_data['news'][0]['link'])
+        for website in websites_url_data:
+            self._website_urls.append(website['link'])
+        print(self._website_urls)
 
+   
     def website_loader(self):
-        website_loader = WebBaseLoader(self.website_urls)
-        self.website_data = website_loader.load()
+        website_loader = WebBaseLoader(self._website_urls)
+        self._website_data = website_loader.load()
 
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=2200)
-        self.website_docs = text_splitter.split_documents(self.website_data)
+        self._website_docs = text_splitter.split_documents(self._website_data)
 
-        print (f"You have {len(self.website_docs)} docs. First doc is {self.llm3.get_num_tokens(self.website_docs[0].page_content)} tokens")
-        print(self.website_docs[0].metadata)
+        print (f"You have {len(self._website_docs)} docs. First doc is {self._llm3.get_num_tokens(self._website_docs[0].page_content)} tokens")
+        #print(self._website_docs[0].metadata)
 
     def transcript_loader(self):
-        youtube_loaders = [YoutubeLoader.from_youtube_url(url) for url in self.video_urls]
+        youtube_loaders = [YoutubeLoader.from_youtube_url(url) for url in self._youtube_urls]
         transcripts = [loader.load() for loader in youtube_loaders]
 
         for youtube_loader in youtube_loaders:
             youtube_loader.add_video_info= True
-            print(youtube_loader.add_video_info)
 
-        self.youtube_transcript = [doc for sublist in transcripts for doc in sublist]
+        self._youtube_transcript = [doc for sublist in transcripts for doc in sublist]
 
         text_splitter = RecursiveCharacterTextSplitter(separators=["\n", " "], chunk_size=10000, chunk_overlap=2200)
 
-        self.youtubedocs= text_splitter.split_documents(self.youtube_transcript)
+        self._youtubedocs= text_splitter.split_documents(self._youtube_transcript)
 
-        print (f"You have {len(self.youtubedocs)} docs. First doc is {self.llm3.get_num_tokens(self.youtubedocs[0].page_content)} tokens")
+        print (f"You have {len(self._youtubedocs)} docs. First doc is {self._llm3.get_num_tokens(self._youtubedocs[0].page_content)} tokens")
 
 
+   
     def create_faiss_vectorstore_websites(self):
         text_splitter = RecursiveCharacterTextSplitter(separators=["\n", " "], chunk_size=4000, chunk_overlap=800)
-        docs= text_splitter.split_documents(self.website_data)
+        docs= text_splitter.split_documents(self._website_data)
         openai_embeddings = OpenAIEmbeddings(show_progress_bar=True, embedding_ctx_length=1024)
-        self.website_db = FAISS.from_documents(docs, openai_embeddings)
+        self._website_db = FAISS.from_documents(docs, openai_embeddings)
+        print('website db created')
 
     def create_faiss_vectorstore_youtube(self):
         text_splitter = RecursiveCharacterTextSplitter(separators=["\n", " "], chunk_size=4000, chunk_overlap=800)
-        docs= text_splitter.split_documents(self.youtube_transcript)
+        docs= text_splitter.split_documents(self._youtube_transcript)
         openai_embeddings = OpenAIEmbeddings(show_progress_bar=True, embedding_ctx_length=1024)
-        self.youtube_db = FAISS.from_documents(docs, openai_embeddings)
+        self._youtube_db = FAISS.from_documents(docs, openai_embeddings)
+        print('youtube db created')
 
 
-    def extract_websites_topics(self):
-
+    
+    def extract_websites_topics(self):             
+    
         template_1="""
         You are a helpful assistant that helps retrieve distinct topics discussed from many websites' content
         - Your goal is to extract the topic names and brief 1-sentence description of the topic
@@ -163,6 +189,7 @@ class AIAgent(Agent):
         - A topic should be substantial, more than just a one-off comment
 
         """
+        
         system_message_prompt_map_1 = SystemMessagePromptTemplate.from_template(template_1)
 
         human_template_1="Websites' Content: {text}" # Simply just pass the text as a human message
@@ -171,6 +198,7 @@ class AIAgent(Agent):
         chat_prompt_map = ChatPromptTemplate.from_messages(messages=[system_message_prompt_map_1, human_message_prompt_map_1])
 
 
+        
         template_2="""
         You are a helpful assistant that helps retrieve topics discussed in websites' content
         - You will be given a series of bullet topics of topics found
@@ -188,14 +216,16 @@ class AIAgent(Agent):
         chat_prompt_combine = ChatPromptTemplate.from_messages(messages=[system_message_prompt_map_2, human_message_prompt_map_2])
 
 
-        chain = load_summarize_chain(self.llm3,
+        chain = load_summarize_chain(self._llm3,
                              chain_type="map_reduce",
                              map_prompt=chat_prompt_map,
                              combine_prompt=chat_prompt_combine,
                             verbose=True
                             )
-        self.topics_found = chain.run({"input_documents": self.website_docs})
-        
+        self._website_topics_found = chain.run({"input_documents": self._website_docs})
+        print('Websites topics found:')
+        print(self._website_topics_found)
+
 
 
     def extract_youtube_topics(self):    
@@ -269,15 +299,20 @@ class AIAgent(Agent):
 
         chat_prompt_combine = ChatPromptTemplate.from_messages(messages=[system_message_prompt_map_2, human_message_prompt_map_2])
 
-        chain = load_summarize_chain(self.llm3,
+        chain = load_summarize_chain(self._llm3,
                              chain_type="map_reduce",
                              map_prompt=chat_prompt_map,
                              combine_prompt=chat_prompt_combine,
                             verbose=True
                             )
         
-        self.youtube_topics_found = chain.run({"input_documents": self.youtubedocs})
+        self._youtube_topics_found = chain.run({"input_documents": self._youtubedocs})
+        print('Youtube topics found:')
+        print(self._youtube_topics_found)
 
+    
+    
+    
     def structure_website_topics(self):
         schema = Object(
             id="topic",
@@ -291,27 +326,27 @@ class AIAgent(Agent):
                 ("Large Language Models: The power and potential of large language models in AI applications.", [{"title": "Large Language Models"}, {"description": "The power and potential of large language models in AI applications."}, {"tag": "AI LLMs"}]),
                 ("Future growth of AI technologies: The prediction that supervised learning and generative AI will continue to grow in value and adoption over the next three years, with the potential for even greater expansion in the long term.", [{"title": "Future growth of AI technologies:"}, {"description": "The prediction that supervised learning and generative AI will continue to grow in value and adoption over the next three years, with the potential for even greater expansion in the long term."}, {"tag": "Future of AI"}]),
                 ("Large Language Models: Dr. Andrew explains how large language models, like GPT, are built using supervised learning to predict the next word, enabling applications that can be built faster and more efficiently.", [{"title": "Large Language Models:"}, {"description": " Dr. Andrew explains how large language models, like GPT, are built using supervised learning to predict the next word, enabling applications that can be built faster and more efficiently."}, {"tag": "AI LLMs"}]),
-        
             ],
             attributes=[
                 Text(
                     id="title",
-                    description="The title of the topic listed",
+                    description="The title of the topic listed.",
                 ),
                 Text(
                     id="description",
-                    description="The description of the topic listed",
+                    description="The description of the topic listed.",
                 ),
                 Text(
                     id="tag",
-                    description="The type of content being described",
+                    description="The type of content being described.",
                 )
             ],
             many=True,
         )
-        chain = create_extraction_chain(self.llm3, schema)
-        website_topics_structured_m = chain.run(self.website_topics_found)
-        self.website_topics_structured= website_topics_structured_m["data"]["topic"]
+        chain = create_extraction_chain(self._llm3, schema)
+        website_topics_structured_m = chain.run(self._website_topics_found)
+        self._website_topics_structured= website_topics_structured_m["data"]["topic"]
+        #self._website_topics_structured= website_topics_structured_m
 
 
     def structure_youtube_topics(self):
@@ -344,9 +379,10 @@ class AIAgent(Agent):
             ],
             many=True,
         )
-        chain = create_extraction_chain(self.llm3, schema)
-        youtube_topics_structured_m = chain.run(self.youtube_topics_found)
-        self.youtube_topics_structured= youtube_topics_structured_m["data"]["topic"]
+        chain = create_extraction_chain(self._llm3, schema)
+        youtube_topics_structured_m = chain.run(self._youtube_topics_found)
+        self._youtube_topics_structured= youtube_topics_structured_m["data"]["topic"]
+        #self._youtube_topics_structured= youtube_topics_structured_m
         
 
     def summarize_youtube_topics(self):
@@ -368,9 +404,9 @@ class AIAgent(Agent):
 
         
         # I'm also setting k=4 so the number of relevant docs we get back is 4. 
-        qa = RetrievalQA.from_chain_type(llm=self.llm3,
+        qa = RetrievalQA.from_chain_type(llm=self._llm3,
                                         chain_type="stuff",
-                                        retriever=self.youtube_db.as_retriever(k=4),
+                                        retriever=self._youtube_db.as_retriever(k=4),
                                         chain_type_kwargs = {
                                             'verbose': True,
                                             'prompt': CHAT_PROMPT
@@ -378,32 +414,42 @@ class AIAgent(Agent):
                                         return_source_documents=True)
         
         
+        
+        for topic in self._youtube_topics_structured:
+            topic_title=topic['title']
+            topic_summary=""
+            topic_source=""
+            topic_publish_date=""
+            topic_timestamp=""
 
-        for topic in self.youtube_topics_structured:
+            topic_desc=topic['description']
+
             query = f"""
                 {topic['title']}: {topic['description']}
             """
-            #expanded_topic = qa.run(query)
             expanded_topic = qa({"query": query})
+
+
             print(f"{topic['title']}: {topic['description']}")
             print ("\n\n")
             print(expanded_topic['result'])
             print ("\n\n")
-            print(type(expanded_topic['source_documents'][0]))  # document
-            print(type(expanded_topic['source_documents']))  #list
-            print ("\n\n")
 
-            for topic in expanded_topic['source_documents']:
-                print(type(topic)) #document
-                print(topic.metadata['source'])
+            topic_summary=expanded_topic['result']
+            youtube_video_ID= expanded_topic['source_documents'][0].metadata['source']
+            topic_source=f"https://www.youtube.com/watch?v={youtube_video_ID}"
+            print(topic_source)
 
-        print(expanded_topic['source_documents'][0].metadata['source'])
+            topic_publish_date= self.get_youtube_info(topic_source)['publish_date']
 
-        youtube_video_ID=expanded_topic['source_documents'][0].metadata['source']
-        youtube_video_URL=f"https://www.youtube.com/watch?v={youtube_video_ID}"
-        print(youtube_video_URL)
+            topic_timestamp= self.get_topic_timestamp_video(title=topic_title, desc=topic_desc)
 
-        #docs[0].metadata['source']
+            tweet_details = {"topic_title":topic_title, "topic_summary": topic_summary, "topic_source":topic_source, "topic_publish_date": topic_publish_date, "topic_timestamp": topic_timestamp}
+    
+            self._tweets.append(tweet_details)
+
+        
+
                                         
 
     def summarize_website_topics(self):
@@ -426,9 +472,9 @@ class AIAgent(Agent):
         CHAT_PROMPT = ChatPromptTemplate.from_messages(messages)
    
         # I'm also setting k=4 so the number of relevant docs we get back is 4. 
-        qa = RetrievalQA.from_chain_type(llm=self.llm3,
+        qa = RetrievalQA.from_chain_type(llm=self._llm3,
                                         chain_type="stuff",
-                                        retriever=self.website_db.as_retriever(k=4),
+                                        retriever=self._website_db.as_retriever(k=4),
                                         chain_type_kwargs = {
                                             'verbose': True,
                                             'prompt': CHAT_PROMPT
@@ -436,7 +482,13 @@ class AIAgent(Agent):
                                         return_source_documents=True)
                                  
 
-        for topic in self.website_topics_structured:
+        for topic in self._website_topics_structured:
+
+            topic_title=topic['title']
+            topic_summary=""
+            topic_source=""
+            topic_publish_date=""
+
             query = f"""
                 {topic['title']}: {topic['description']}
             """
@@ -448,6 +500,17 @@ class AIAgent(Agent):
             print ("\n\n")
             print(expanded_topic['source_documents'])
             print ("\n\n")
+
+
+            topic_summary=expanded_topic['result']
+            topic_source=expanded_topic['source_documents'][0].metadata['source']
+            print(topic_source)
+
+            topic_publish_date= self.get_website_publish_date(topic_source)
+
+            tweet_details = {"topic_title":topic_title, "topic_summary": topic_summary, "topic_source":topic_source, "topic_publish_date": topic_publish_date}
+
+            self._tweets.append(tweet_details)
 
 
     # def get_tweet_title(self):
@@ -470,7 +533,6 @@ class AIAgent(Agent):
     
     def get_youtube_info(self, youtube_link) -> dict:
         yt = YouTube(youtube_link)
-        print(yt.author)
         video_info = {
                     "publish_date": yt.publish_date.strftime("%Y-%m-%d %H:%M:%S")
                     if yt.publish_date
@@ -480,9 +542,9 @@ class AIAgent(Agent):
                 }
         return video_info
 
+     
 
-
-    def get_topic_timestamp_in_video(self):
+    def get_topic_timestamp_video(self, title, desc):
         system_template = """
         What is the first timestamp when the speakers started talking about a topic the user gives?
         Only respond with the timestamp, nothing else. Example: 0:18:24
@@ -494,9 +556,35 @@ class AIAgent(Agent):
         ]
         CHAT_PROMPT = ChatPromptTemplate.from_messages(messages)
 
-        qa = RetrievalQA.from_chain_type(llm=self.llm3,
+        qa = RetrievalQA.from_chain_type(llm=self._llm3,
                                  chain_type="stuff",
-                                 retriever=self.youtube_db.as_retriever(k=4),
+                                 retriever=self._youtube_db.as_retriever(k=4),
+                                 chain_type_kwargs = {
+#                                      'verbose': True,
+                                     'prompt': CHAT_PROMPT
+                                 })
+        query = f"{title} - {desc}"
+        timestamp = qa.run(query)
+        return timestamp
+        
+
+
+
+    def get_topics_timestamps_in_video(self):
+        system_template = """
+        What is the first timestamp when the speakers started talking about a topic the user gives?
+        Only respond with the timestamp, nothing else. Example: 0:18:24
+        ----------------
+        {context}"""
+        messages = [
+            SystemMessagePromptTemplate.from_template(system_template),
+            HumanMessagePromptTemplate.from_template("{question}"),
+        ]
+        CHAT_PROMPT = ChatPromptTemplate.from_messages(messages)
+
+        qa = RetrievalQA.from_chain_type(llm=self._llm3,
+                                 chain_type="stuff",
+                                 retriever=self._youtube_db.as_retriever(k=4),
                                  chain_type_kwargs = {
 #                                      'verbose': True,
                                      'prompt': CHAT_PROMPT
@@ -505,7 +593,7 @@ class AIAgent(Agent):
         # Holder for our topic timestamps
         topic_timestamps = []
 
-        for topic in self.youtube_topics_structured:
+        for topic in self._youtube_topics_structured:
 
             query = f"{topic['title']} - {topic['description']}"
             timestamp = qa.run(query)
@@ -538,5 +626,5 @@ class AIAgent(Agent):
             ],
             many=True,
         )
-        chain_with_time = create_extraction_chain(self.llm3, schema_time)
+        chain_with_time = create_extraction_chain(self._llm3, schema_time)
         topics_structured_with_time= chain_with_time.run(topic_timestamps_n)

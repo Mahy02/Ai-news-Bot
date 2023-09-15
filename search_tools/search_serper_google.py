@@ -10,8 +10,8 @@ class SerpSearchTool:
         url = "https://google.serper.dev/search"
         payload = json.dumps({
             'q': self.query,
-            'type': "news",
-            'num': 10,
+            #'type': "news",
+            'num': 5,
             'hl': 'en',
             #"key": google_api_key,
             #"cx": search_engine_id,
@@ -24,8 +24,8 @@ class SerpSearchTool:
         response = requests.request("POST", url, headers=headers, data=payload)
         response_data = response.json()
         #pprint.pp("Search results: ", response_data)
-        print("Search pars: ", response_data['searchParameters'])
+        #print("Search pars: ", response_data['searchParameters'])
         #news if type is news, and organic if type is search
-        for i, item in enumerate(response_data['news']):
-            print(response_data['news'][i])
-        return response_data
+        # for i, item in enumerate(response_data['news']):
+        #     print(response_data['news'][i])
+        return response_data['news']
