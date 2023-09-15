@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 
 
 # local
-from .twit import tweeter
+from twit import tweeter
 
 load_dotenv()
 template = """
@@ -72,7 +72,10 @@ prompt = PromptTemplate(
     input_variables=["info","topic"], template=template
 )
 
-llm3 = ChatOpenAI(model_name="gpt-4")
+llm3 = ChatOpenAI(temperature=0,
+                  model_name="gpt-3.5-turbo-0613",
+                  request_timeout = 180
+                )
 llm_chain = LLMChain(
     llm=llm3,
     prompt=prompt,
@@ -80,7 +83,7 @@ llm_chain = LLMChain(
     
 )
 
-  
+#twitapi is the client with all keys and secrets
 twitapi = tweeter()
 
 def tweetertweet(thread):
@@ -89,9 +92,9 @@ def tweetertweet(thread):
    
     #check each tweet is under 280 chars
     for i in range(len(tweets)):
-        if len(tweets[i]) > 280:
+        if len(tweets[i]) > 280:    
             prompt = f"Shorten this tweet to be under 280 characters: {tweets[i]}"
-            tweets[i] = llm.predict(prompt)[:280]
+            tweets[i] = llm3.predict(prompt)[:280]
     #give some spacing between sentances
     tweets = [s.replace('. ', '.\n\n') for s in tweets]
 
@@ -120,15 +123,14 @@ def tweetertweet(thread):
 app = FastAPI()
 
 
-class Query(BaseModel):
-    query: str
+
 
 
 @app.post("/")
-def researchAgent( query: Query):
-    query = query.query
-    content = agent({"input": query})
-    actual_content = content['output']
-    thread = llm_chain.predict(info = actual_content, topic = query)
+def researchAgent(tweet_details):
+    topic_summary= tweet_details['topic_summary']
+    topic_headline= tweet_details['topic_title']
+    thread = llm_chain.predict(info = topic_summary, topic = topic_headline)
+    #we should also add source, publish date and timstamp here at the end of the thread and pass it to tweetertweet()
     ret = tweetertweet(thread)
     return ret
