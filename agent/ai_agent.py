@@ -513,19 +513,6 @@ class AIAgent():
             self._tweets.append(tweet_details)
 
 
-    # def get_tweet_title(self):
-    #     pass
-
-    # def get_tweet_body(self):
-    #     pass
-
-    # def get_tweet_source(self):
-    #     pass
-
-    # def get_tweet_date(self):
-    #     pass
-
-
     def get_website_publish_date(self, website_link) -> str:
         html=requests.get(website_link).content.decode('utf-8')
         date = find_date(html)
