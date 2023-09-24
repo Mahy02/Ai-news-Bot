@@ -114,49 +114,49 @@ def main():
 
     ai_agent = AIAgent()
 
-    # # 1. Search
+    # 1. Search
 
-    # #ai_agent.search_ai_news_urls()   #comment for now to not use up much requests
+    ai_agent.search_ai_news_urls()   #comment for now to not use up much requests
 
-    # # - here we can filter out the publish date and make new list with new ones only
+    # - here we can filter out the publish date and make new list with new ones only
 
-    # # 2. Load & Split
+    # 2. Load & Split
 
-    # ai_agent.website_loader()
-    # ai_agent.transcript_loader()
+    ai_agent.website_loader()
+    ai_agent.transcript_loader()
 
-    # # 3. Extract topics
+    # 3. Extract topics
 
-    # ai_agent.extract_websites_topics()
-    # print(ai_agent._website_topics_found)
-    # ai_agent.extract_youtube_topics()
-    # print(ai_agent._youtube_topics_found)
+    ai_agent.extract_websites_topics()
+    print(ai_agent._website_topics_found)
+    ai_agent.extract_youtube_topics()
+    print(ai_agent._youtube_topics_found)
 
-    # # 4. Structure topics
+    # 4. Structure topics
 
-    # ai_agent.structure_youtube_topics()
-    # print(ai_agent._youtube_topics_structured)
-    # ai_agent.structure_website_topics()
-    # print(ai_agent._website_topics_structured)
+    ai_agent.structure_youtube_topics()
+    print(ai_agent._youtube_topics_structured)
+    ai_agent.structure_website_topics()
+    print(ai_agent._website_topics_structured)
     
 
 
-    # # 5. Vector databases FAISS
-    # ai_agent.create_faiss_vectorstore_websites()
-    # ai_agent.create_faiss_vectorstore_youtube()
+    # 5. Vector databases FAISS
+    ai_agent.create_faiss_vectorstore_websites()
+    ai_agent.create_faiss_vectorstore_youtube()
 
 
-    # # 6. Summarize
-    # ai_agent.summarize_website_topics()
-    # ai_agent.summarize_youtube_topics()
+    # 6. Summarize
+    ai_agent.summarize_website_topics()
+    ai_agent.summarize_youtube_topics()
 
 
     # 7. Get Tweets
     tweets: list
     tweets=[
-        {'topic_title': 'Google Models', 'topic_summary': 'Google has recently unveiled new features that utilize AI as a collaborator. These features include upgrades to Google Maps, real-time weather and traffic conditions presented in a 3D world, and a universal translator for videos in different languages. The goal is to harness the true potential of AI by personalizing and making it a private AI model. The shift with AI is evident in these new features, which aim to provide a more intuitive and contextual experience for users. With AI becoming an ever-evolving and personalized form of memory, Google is moving boldly but responsibly in integrating AI into various aspects of our lives.', 'topic_source': 'https://www.youtube.com/watch?v=MT8qGJZs4Gw', 'topic_publish_date': '2023-05-11 00:00:00', 'topic_timestamp': '0:00:00'},
-#         {'topic_title': 'AI-driven tool for personalizing 3D-printable models', 'topic_summary': 'Researchers have developed an AI-driven tool called Style2Fab that allows users to easily personalize 3D-printable models without compromising their functionality. This tool is particularly useful for creating customized assistive devices. With Style2Fab, makers can quickly customize the design of 3D-printable objects to meet individual needs and preferences. This advancement in AI technology makes it easier for individuals to access personalized solutions and improve their quality of life.', 'topic_source': 'https://news.mit.edu/topic/artificial-intelligence2', 'topic_publish_date': '2023-09-15'},
-# {'topic_title': 'Personalized AI', 'topic_summary': "Google is working on developing personalized AI that can understand users and their surroundings to provide the best results. This AI can help guide decision making, manage workloads, and provide tailored responses in the user's own voice. The more the user interacts with the AI, the more it can assist them in various aspects of their life. The AI can also provide recommendations based on the user's preferences and needs, such as dietary restrictions. As AI continues to advance, it has the potential to transform many aspects of our lives in unimaginable ways.", 'topic_source': 'https://www.youtube.com/watch?v=gMsQO5u7-NQ', 'topic_publish_date': '2023-05-09 00:00:00', 'topic_timestamp': 'The timestamp when the speakers started talking about personalized AI is at 0:01:50.'}
+        #{'topic_title': 'Google Models', 'topic_summary': 'Google has recently unveiled new features that utilize AI as a collaborator. These features include upgrades to Google Maps, real-time weather and traffic conditions presented in a 3D world, and a universal translator for videos in different languages. The goal is to harness the true potential of AI by personalizing and making it a private AI model. The shift with AI is evident in these new features, which aim to provide a more intuitive and contextual experience for users. With AI becoming an ever-evolving and personalized form of memory, Google is moving boldly but responsibly in integrating AI into various aspects of our lives.', 'topic_source': 'https://www.youtube.com/watch?v=MT8qGJZs4Gw', 'topic_publish_date': '2023-05-11 00:00:00', 'topic_timestamp': '0:00:00'},
+        #{'topic_title': 'AI-driven tool for personalizing 3D-printable models', 'topic_summary': 'Researchers have developed an AI-driven tool called Style2Fab that allows users to easily personalize 3D-printable models without compromising their functionality. This tool is particularly useful for creating customized assistive devices. With Style2Fab, makers can quickly customize the design of 3D-printable objects to meet individual needs and preferences. This advancement in AI technology makes it easier for individuals to access personalized solutions and improve their quality of life.', 'topic_source': 'https://news.mit.edu/topic/artificial-intelligence2', 'topic_publish_date': '2023-09-15'},
+ #{'topic_title': 'Personalized AI', 'topic_summary': "Google is working on developing personalized AI that can understand users and their surroundings to provide the best results. This AI can help guide decision making, manage workloads, and provide tailored responses in the user's own voice. The more the user interacts with the AI, the more it can assist them in various aspects of their life. The AI can also provide recommendations based on the user's preferences and needs, such as dietary restrictions. As AI continues to advance, it has the potential to transform many aspects of our lives in unimaginable ways.", 'topic_source': 'https://www.youtube.com/watch?v=gMsQO5u7-NQ', 'topic_publish_date': '2023-05-09 00:00:00', 'topic_timestamp': 'The timestamp when the speakers started talking about personalized AI is at 0:01:50.'}
 ]
     
     ai_agent.set_tweets(tweets=tweets)

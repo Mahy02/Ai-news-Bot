@@ -21,6 +21,9 @@ class TwitterHandler:
         # Create two tweets for the source and publish date
         source_tweet = f"If you want to learn more, check out the original source link!: {source}"
         publish_date_tweet = f"Website/Youtube Video Published on {publish_date}"
+        print(source_tweet)
+        print(publish_date_tweet)
+        print(timestamp)
         if timestamp != -1:
             tweet_timestamp=f"Topic Timestamp in the video: {str(timestamp)}"
         
@@ -38,13 +41,16 @@ class TwitterHandler:
                                         in_reply_to_tweet_id=id, 
                                         )
                 id = reptweet.data['id']
+                print(id)
             # Post the source and publish date tweets
-            id=id+1
-            self.twitapi.create_tweet(text=source_tweet,in_reply_to_tweet_id=id)
-            id=id+1
-            self.twitapi.create_tweet(text=publish_date_tweet,in_reply_to_tweet_id=id)
+            #id=id+str(1)
+            response= self.twitapi.create_tweet(text=source_tweet,in_reply_to_tweet_id=id)
+            id = response.data['id']
+            # id=id+1
+            response= self.twitapi.create_tweet(text=publish_date_tweet,in_reply_to_tweet_id=id)
+            id = response.data['id']
             if timestamp !=-1:
-                 id=id+1
+                 #id=id+1
                  self.twitapi.create_tweet(text=timestamp,in_reply_to_tweet_id=id)
             
             return "Tweets posted successfully"

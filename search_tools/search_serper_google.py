@@ -10,7 +10,7 @@ class SerpSearchTool:
         url = "https://google.serper.dev/search"
         payload = json.dumps({
             'q': self.query,
-            #'type': "news",
+            'type': "news",
             'num': 5,
             'hl': 'en',
             #"key": google_api_key,

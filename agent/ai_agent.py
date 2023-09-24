@@ -46,14 +46,14 @@ class AIAgent():
         self._youtube_tool = YouTubeVideoFinder(query="What is new about AI today?", num_of_videos=5)
         self._serp_tool = SerpSearchTool(query="What is new about AI today?" ,api_key=os.environ.get('SERPAPI_API_KEY'))
         
-        # self._youtube_urls=[]
-        # self._website_urls=[]
+        self._youtube_urls=[]
+        self._website_urls=[]
         
         # self._youtube_urls=['https://www.youtube.com/watch?v=LK5j3pp0Too&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk', 'https://www.youtube.com/watch?v=MT8qGJZs4Gw&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=gMsQO5u7-NQ&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=LWiM-LuRe6w&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=NqnBT4-jp54&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=dv9q7Ema40k&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=2V0Irah05wk&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=vufqgaD_7Ow&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=0a5e0iCW6bE&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=XTzOxMq-Qk0&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_']
         # self._website_urls=['https://www.dhs.gov/news/2023/09/14/dhs-announces-new-policies-and-measures-promoting-responsible-use-artificial', 'https://www.commerce.senate.gov/2023/9/sen-cruz-ai-has-opportunity-to-improve-lives-spur-economic-growth-and-create-new-jobs', 'https://www.cnn.com/2023/09/13/tech/schumer-tech-companies-ai-regulations/index.html', 'https://www.nytimes.com/2023/09/13/technology/silicon-valley-ai-washington-schumer.html', 'https://www.ey.com/en_gl/news/2023/09/ey-announces-launch-of-artificial-intelligence-platform-ey-ai-following-us-1-4b-investment', 'https://www.nytimes.com/2023/09/14/us/new-york-guidebooks-artificial-intelligence.html', 'https://www.utsa.edu/today/2023/09/story/UTSA-UT-Health-first-dual-degree-in-medicine-and-AI.html', 'https://www.psychologytoday.com/us/blog/building-brain-capital/202309/navigating-the-age-of-ai-the-role-of-a-new-brain-industry', 'https://www.gartner.com/en/articles/what-s-new-in-artificial-intelligence-from-the-2023-gartner-hype-cycle', 'https://www.forbes.com/sites/forbesbusinesscouncil/2023/09/14/how-will-ai-surround-you-and-your-business-now-and-in-the-future/']
         
-        self._youtube_urls=['https://www.youtube.com/watch?v=LK5j3pp0Too&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk', 'https://www.youtube.com/watch?v=MT8qGJZs4Gw&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=gMsQO5u7-NQ&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_']
-        self._website_urls=["https://www.theguardian.com/technology/artificialintelligenceai", "https://news.mit.edu/topic/artificial-intelligence2"]
+        # self._youtube_urls=['https://www.youtube.com/watch?v=LK5j3pp0Too&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk', 'https://www.youtube.com/watch?v=MT8qGJZs4Gw&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_', 'https://www.youtube.com/watch?v=gMsQO5u7-NQ&pp=ygUbV2hhdCBpcyBuZXcgYWJvdXQgQUkgdG9kYXk_']
+        # self._website_urls=["https://www.theguardian.com/technology/artificialintelligenceai", "https://news.mit.edu/topic/artificial-intelligence2"]
         
         #self._website_urls=["https://www.artificialintelligence-news.com/", "https://www.sciencedaily.com/news/computers_math/artificial_intelligence/", "https://www.theguardian.com/technology/artificialintelligenceai"]
         
