@@ -12,8 +12,10 @@ Discover [AI-Ava](https://twitter.com/tweeetybot_2023?t=eoAprdx5Z6gROxXlpSnyGA&s
 <br>
 <br>
 
+<p align="center">
+  <img src="https://github.com/Mahy02/Ai-news-Bot/raw/main/screenshots/Screenshot%202023-09-16%20134425.png" width="600" alt="AI-AVA">
+</p>
 
-![AI-AVA](https://github.com/Mahy02/Ai-news-Bot/blob/main/screenshots/Screenshot%202023-09-16%20134425.png?raw=true)
 
 <br>
 <br>
