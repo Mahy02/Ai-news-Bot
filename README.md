@@ -26,7 +26,7 @@ Discover [AI-Ava](https://twitter.com/tweeetybot_2023?t=eoAprdx5Z6gROxXlpSnyGA&s
 <div style="display: flex; justify-content: center; flex-wrap: wrap;">
 
   <div style="display: flex; margin-right: 20px;">
-    <img src="https://github.com/Mahy02/Ai-news-Bot/blob/main/screenshots/Screenshot%202023-09-28%20091140.png" alt="ss" width="500" height="700">
+    <img src="https://github.com/Mahy02/Ai-news-Bot/blob/main/screenshots/Screenshot%202023-09-28%20123843.png" alt="ss" width="500" height="700">
     <img src="https://github.com/Mahy02/Ai-news-Bot/blob/main/screenshots/Screenshot%202023-09-28%20121942.png" alt="ss" width="500" height="700">
   </div>
  <br>
