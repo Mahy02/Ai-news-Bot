@@ -23,15 +23,20 @@ Discover [AI-Ava](https://twitter.com/tweeetybot_2023?t=eoAprdx5Z6gROxXlpSnyGA&s
 ---
 ## Project Screenshots
 
-<div style="display: flex; justify-content: center;">
-  
-   <img src="https://github.com/Mahy02/Ai-news-Bot/blob/main/screenshots/Screenshot%202023-09-28%20091140.png" alt="ss" width="500" height="600" style="margin-right: 20px;">
-    <img src="https://github.com/Mahy02/Ai-news-Bot/blob/main/screenshots/Screenshot%202023-09-28%20121942.png" alt="ss" width="450" height="600" style="margin-right: 20px;">
-  <br>
-  <br>
-    <img src="https://github.com/Mahy02/Ai-news-Bot/blob/main/screenshots/Screenshot%202023-09-28%20122059.png" alt="ss" width="450" height="600" style="margin-right: 20px;">
-    <img src="https://github.com/Mahy02/Ai-news-Bot/blob/main/screenshots/Screenshot%202023-09-28%20122129.png" alt="ss"  width="450" height="600" style="margin-right: 20px;">
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+
+  <div style="display: flex; margin-right: 20px;">
+    <img src="https://github.com/Mahy02/Ai-news-Bot/blob/main/screenshots/Screenshot%202023-09-28%20091140.png" alt="ss" >
+    <img src="https://github.com/Mahy02/Ai-news-Bot/blob/main/screenshots/Screenshot%202023-09-28%20121942.png" alt="ss" >
+  </div>
+
+  <div style="display: flex; margin-right: 20px;">
+    <img src="https://github.com/Mahy02/Ai-news-Bot/blob/main/screenshots/Screenshot%202023-09-28%20122059.png" alt="ss" >
+    <img src="https://github.com/Mahy02/Ai-news-Bot/blob/main/screenshots/Screenshot%202023-09-28%20122129.png" alt="ss">
+  </div>
+
 </div>
+
 
 ---
 
